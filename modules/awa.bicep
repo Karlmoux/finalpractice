@@ -11,8 +11,14 @@ resource webApp 'Microsoft.Web/sites@2021-02-01' = {
   kind: kind
   properties: {
     serverFarmId: serverFarmResourceId
-    siteConfig: siteConfig
-    appSettings: appSettingsKeyValuePairs
+    siteConfig: {
+      ...siteConfig
+      appSettings: [
+        for key in objectKeys(appSettingsKeyValuePairs): {
+          name: key
+          value: appSettingsKeyValuePairs[key]
+        }
+      ]
+    }
   }
-  
 }
