@@ -12,7 +12,8 @@ resource webApp 'Microsoft.Web/sites@2021-02-01' = {
   properties: {
     serverFarmId: serverFarmResourceId
     siteConfig: {
-      ...siteConfig
+      linuxFxVersion: siteConfig.linuxFxVersion
+      appCommandLine: siteConfig.appCommandLine
       appSettings: [
         for key in objectKeys(appSettingsKeyValuePairs): {
           name: key
